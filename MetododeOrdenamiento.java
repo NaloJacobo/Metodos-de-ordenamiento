@@ -1,6 +1,5 @@
 package metodeordenamiento;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -22,6 +21,7 @@ public class MetododeOrdenamiento {
         System.out.println("3. Metodo de inserccion");
         System.out.println("4. Metodo shell");
         System.out.println("5. Metodo QuickSort");
+        System.out.println("6. Metodo Ackerman");
         int opcion = sca.nextInt();
 
         switch (opcion) {
@@ -33,7 +33,7 @@ public class MetododeOrdenamiento {
                     System.out.print(arreglo[i] + " ");
                 }
 
-                burbuja(arreglo);
+                Burbuja.burbuja(arreglo);
 
                 System.out.print("\nArreglo ordenado:\n");
 
@@ -50,7 +50,7 @@ public class MetododeOrdenamiento {
                     System.out.print(arreglo[i] + " ");
                 }
 
-                seleccion(arreglo);
+                Seleccion.seleccion(arreglo);
 
                 System.out.print("\nArreglo ordenado:\n");
 
@@ -67,7 +67,7 @@ public class MetododeOrdenamiento {
                     System.out.print(arreglo[i] + " ");
                 }
 
-                insercion(arreglo);
+                Inserccion.insercion(arreglo);
 
                 System.out.print("\nArreglo ordenado:\n");
 
@@ -85,7 +85,7 @@ public class MetododeOrdenamiento {
                     System.out.print(arreglo[i] + " ");
                 }
 
-                shell(arreglo);
+                Shell.shell(arreglo);
 
                 System.out.print("\nArreglo ordenado:\n");
 
@@ -103,13 +103,25 @@ public class MetododeOrdenamiento {
                     System.out.print(arreglo[i] + " ");
                 }
 
-                quickSort(arreglo, 0, arreglo.length - 1);
+                QuickSort.quickSort(arreglo, 0, arreglo.length - 1);
 
                 System.out.print("\nArreglo ordenado:\n");
 
                 for (int i = 0; i < arreglo.length; i++) {
                     System.out.print(arreglo[i] + " ");
                 }
+
+                break;
+                
+                case 6:
+
+                System.out.print("Ingrese m y n:\n");
+                int m = sca.nextInt();
+                int h = sca.nextInt();
+
+                System.out.print("\nAckerman de " + m + " , " + h + " es:\n");
+
+                    System.out.println(Ackerman.ack(m, h)); 
 
                 break;
 
@@ -128,89 +140,4 @@ public class MetododeOrdenamiento {
         return arreglo;
     }
 
-    public static void burbuja(int[] arreglo) {
-        int n = arreglo.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (arreglo[j] > arreglo[j + 1]) {
-
-                    int temp = arreglo[j];
-                    arreglo[j] = arreglo[j + 1];
-                    arreglo[j + 1] = temp;
-                }
-            }
-        }
-    }
-
-    public static void seleccion(int[] arreglo) {
-        int n = arreglo.length;
-        for (int i = 0; i < n - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < n; j++) {
-                if (arreglo[j] < arreglo[minIndex]) {
-                    minIndex = j;
-                }
-            }
-
-            int temp = arreglo[i];
-            arreglo[i] = arreglo[minIndex];
-            arreglo[minIndex] = temp;
-        }
-    }
-
-    public static void insercion(int[] arreglo) {
-        int n = arreglo.length;
-        for (int i = 1; i < n; i++) {
-            int key = arreglo[i];
-            int j = i - 1;
-            while (j >= 0 && arreglo[j] > key) {
-                arreglo[j + 1] = arreglo[j];
-                j--;
-            }
-            arreglo[j + 1] = key;
-        }
-    }
-
-    public static void shell(int[] arreglo) {
-        int n = arreglo.length;
-        for (int mitad = n / 2; mitad > 0; mitad /= 2) {
-            for (int i = mitad; i < n; i += 1) {
-                int aux = arreglo[i];
-                int j;
-
-                for (j = i; j >= mitad && arreglo[j - mitad] > aux; j -= mitad) {
-                    arreglo[j] = arreglo[j - mitad];
-                }
-
-                arreglo[j] = aux;
-            }
-        }
-    }
-
-    private static void quickSort(int[] arreglo, int izq, int der) {
-        if (izq < der) {
-            int pivotIndex = particion(arreglo, izq, der);
-            quickSort(arreglo, der, pivotIndex - 1);
-            quickSort(arreglo, pivotIndex + 1, der);
-        }
-    }
-
-    private static int particion(int[] arreglo, int izq, int der) {
-        int pivote = arreglo[der];
-        int i = izq - 1;
-        for (int j = izq; j < der; j++) {
-            if (arreglo[j] < pivote) {
-                i++;
-                intercambio(arreglo, i, j);
-            }
-        }
-        intercambio(arreglo, i + 1, der);
-        return i + 1;
-    }
-
-    private static void intercambio(int[] arreglo, int i, int j) {
-        int temp = arreglo[i];
-        arreglo[i] = arreglo[j];
-        arreglo[j] = temp;
-    }
 }
